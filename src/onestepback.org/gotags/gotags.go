@@ -37,8 +37,18 @@ func walkDir(writer *bufio.Writer, path string, info os.FileInfo, err error) err
 	return nil
 }
 
+var version = "1.0.0"
+
 func main() {
+	var showVersion bool = false
+
+	flag.BoolVar(&showVersion, "v", false, "Display the version number")
 	flag.Parse()
+
+	if showVersion {
+		fmt.Println(version)
+		os.Exit(0)
+	}
 
 	fo, _ := os.Create("TAGS")
 	defer fo.Close()
@@ -61,5 +71,6 @@ func main() {
 	}
 	if err != nil {
 		fmt.Println("Error: " + err.Error())
+		os.Exit(-1)
 	}
 }

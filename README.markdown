@@ -10,7 +10,7 @@ Features:
 
 * Ruby only
 * Emacs TAGS file only
-* No command line options
+* Minimal command line arguments
 * But it's **fast**
 
 Detects:
@@ -24,7 +24,7 @@ Detects:
 ## Usage:
 
 ```
-$ gotags file [file...]
+$ gotags [options] file [file...]
 ```
 
 Analyze all files listed in the command line. If the file is a
@@ -33,6 +33,10 @@ If no files are listed, then the current directory ('.') is assumed.
 
 Only <code>.rb</code>, <code>.rake</code> and <code>Rakefile</code>
 files are actually handled, all other files are silently ignored.
+
+**Command Line Options:**
+
+* <code>-v</code> -- Print the version of the program and exit.
 
 ## Building
 

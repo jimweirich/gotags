@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"os"
-	"regexp"
 )
 
 type LineSource struct {
@@ -48,9 +47,16 @@ func (self *LineSource) Close() {
 	self.File.Close()
 }
 
-var endsInCommaRe = regexp.MustCompile(",[ \t\n]*$")
-
 func (self *LineSource) endsInComma(line string) bool {
-	match := endsInCommaRe.FindString(line)
-	return match != ""
+	i := len(line)-1
+	for i >= 0 {
+		if line[i] == ',' {
+			return true
+		}
+		if line[i] != '\n' && line[i] != ' ' {
+			return false
+		}
+		i--
+	}
+	return false
 }

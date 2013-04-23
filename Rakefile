@@ -51,3 +51,8 @@ task :deploy, [:bindir] => :build do |t, args|
   mkdir_p bindir unless File.exist?(bindir)
   cp "bin/gotags", bindir
 end
+
+desc "Run tags on all gems in Gem HOME"
+task :taghome do
+  sh "time bin/gotags '#{`gem env gemhome`.strip}'"
+end

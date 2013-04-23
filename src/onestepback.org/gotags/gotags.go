@@ -15,24 +15,24 @@ type Location struct {
 func processFile(writer *bufio.Writer, path string) {
 	loc := Location { LineCount: 1, ByteCount: 0 }
 	tag := NewTag(path)
-	if filepath.Ext(path) != ".rb" {
-		return
-	}
-	f, _ := os.Open(path)
-	r := bufio.NewReader(f)
-	var err error = nil
-	var line string
-	rset := NewRuleSet()
-	for {
-		line, err = r.ReadString('\n')
-		if err != nil {
-			break
+	ext := filepath.Ext(path)
+	if ext == ".rb" || ext == ".rake" || filepath.Base(path) == "Rakefile"  {
+		f, _ := os.Open(path)
+		r := bufio.NewReader(f)
+		var err error = nil
+		var line string
+		rset := NewRuleSet()
+		for {
+			line, err = r.ReadString('\n')
+			if err != nil {
+				break
+			}
+			rset.CheckLine(tag, line, loc)
+			loc.LineCount++
+			loc.ByteCount += len(line)
 		}
-		rset.CheckLine(tag, line, loc)
-		loc.LineCount++
-		loc.ByteCount += len(line)
+		tag.WriteOn(writer)
 	}
-	tag.WriteOn(writer)
 }
 
 func walkDir(writer *bufio.Writer, path string, info os.FileInfo, err error) error {

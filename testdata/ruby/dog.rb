@@ -6,7 +6,8 @@ module Animal
   end
 
   class Dog < Animal::Base
-    attr_reader :tail, :head
+    attr_reader :tail, :head,
+      :feet
 
     def speak(string)
     end

@@ -28,9 +28,14 @@ func (self *Rule) Init(pattern string, tagIndex, defIndex int, isMulti bool) {
 func (self *Rule) Match(data string) (string, string, bool) {
 	matches := self.Pattern.FindStringSubmatch(data)
 	if len(matches) > 0 {
-		return matches[self.TagIndex], matches[self.DefIndex], true
+		return matches[self.TagIndex], self.firstLineOnly(matches[self.DefIndex]), true
 	}
 	return "", "", false
+}
+
+func (self *Rule) firstLineOnly(str string) string {
+	splits := strings.Split(str, "\n")
+	return splits[0]
 }
 
 func (self *Rule) Apply(tag *Tag, data string, loc Location) bool {
@@ -52,7 +57,7 @@ func (self *Rule) AddSingle(tag *Tag, tagname, defstring string, loc Location) {
 
 func (self *Rule) AddMulti(tag *Tag, tagname, defstring string, loc Location) {
 	for _, name := range strings.Split(tagname, ",") {
-		name = strings.Trim(name, " *:")
+		name = strings.Trim(name, " \t\n*:")
 		tag.Add(name, defstring, loc)
 	}
 }
@@ -61,7 +66,7 @@ var RubyRules = []*Rule {
 	NewRule("^[ \t]*(class|module)[ \t]+([A-Z][A-Za-z0-9_]+::)*([A-Z][A-Za-z0-9_]*)", 3, 0, false),
 	NewRule("^[ \t]*def[ \t]+((self\\.)?[a-z0-9_]+(!?)?)", 1, 0, false),
 	NewRule("^[ \t]*([A-Z][A-Za-z0-9_]*)[ \t]*=", 1, 0, false),
-	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:a-z0-9_, ]+)", 2, 0, true),
+	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:a-z0-9_, \t\n]+)", 2, 0, true),
 	NewRule("^[ \t]*alias(_method)?[ \t]+:?([A-Za-z0-9_]+)", 2, 0, false),
 }
 

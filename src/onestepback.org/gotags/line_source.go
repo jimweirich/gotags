@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"os"
+	"regexp"
 )
 
 type LineSource struct {
@@ -31,11 +32,25 @@ func (self *LineSource) Init(path string) error {
 
 func (self *LineSource) ReadLine() (string, error) {
 	self.Loc = self.NextLoc
-	line, err := self.BufferedReader.ReadString('\n')
-	self.NextLoc = self.NextLoc.Bump(line)
+	line := ""
+	var err error
+	var data string
+	for {
+		data, err = self.BufferedReader.ReadString('\n')
+		self.NextLoc = self.NextLoc.Bump(data)
+		line = line + data
+		if ! self.endsInComma(line) { break }
+	}
 	return line, err
 }
 
 func (self *LineSource) Close() {
 	self.File.Close()
+}
+
+var endsInCommaRe = regexp.MustCompile(",[ \t\n]*$")
+
+func (self *LineSource) endsInComma(line string) bool {
+	match := endsInCommaRe.FindString(line)
+	return match != ""
 }

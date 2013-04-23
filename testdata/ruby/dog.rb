@@ -2,7 +2,10 @@ module Animal
 
   VERSION = "1.0"
 
-  class Dog
+  class Base
+  end
+
+  class Dog < Animal::Base
     attr_reader :tail, :head
 
     def speak(string)

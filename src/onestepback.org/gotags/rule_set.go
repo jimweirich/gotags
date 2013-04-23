@@ -64,9 +64,9 @@ func (self *Rule) AddMulti(tag *Tag, tagname, defstring string, loc Location) {
 
 var RubyRules = []*Rule {
 	NewRule("^[ \t]*(class|module)[ \t]+([A-Z][A-Za-z0-9_]+::)*([A-Z][A-Za-z0-9_]*)", 3, 0, false),
-	NewRule("^[ \t]*def[ \t]+((self\\.)?[a-z0-9_]+(!?)?)", 1, 0, false),
+	NewRule("^[ \t]*def[ \t]+((self\\.)?[A-Za-z0-9][A-Za-z0-9_]*(!?)?)", 1, 0, false),
 	NewRule("^[ \t]*([A-Z][A-Za-z0-9_]*)[ \t]*=", 1, 0, false),
-	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:a-z0-9_, \t\n]+)", 2, 0, true),
+	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:A-Za-z0-9_, \t\n]+)", 2, 0, true),
 	NewRule("^[ \t]*alias(_method)?[ \t]+:?([A-Za-z0-9_]+)", 2, 0, false),
 }
 

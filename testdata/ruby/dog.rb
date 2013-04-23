@@ -7,7 +7,7 @@ module Animal
 
   class Dog < Animal::Base
     attr_reader :tail, :head,
-      :feet,                    # comment
+      :front_feet, :Back_Feet, , :Fur
 
     def speak(string)
     end
@@ -16,5 +16,9 @@ module Animal
     def wag
     end
     alias_method :wiggle, :wag
+
+    def EatFood
+    end
+    alias :Consume :Eat
   end
 end

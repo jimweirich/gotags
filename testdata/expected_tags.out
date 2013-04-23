@@ -1,13 +1,17 @@
 
-testdata/ruby/dog.rb,331
+testdata/ruby/dog.rb,486
 module AnimalAnimal1,0
   VERSION =VERSION3,15
   class BaseBase5,34
   class DogDog8,54
     attr_reader :tail, :head,tail9,81
     attr_reader :tail, :head,head9,81
-    attr_reader :tail, :head,feet9,81
-    def speakspeak12,154
-    alias :barkbark14,184
-    def wagwag16,208
-    alias_method :wigglewiggle18,228
+    attr_reader :tail, :head,front_feet9,81
+    attr_reader :tail, :head,Back_Feet9,81
+    attr_reader :tail, :head,Fur9,81
+    def speakspeak12,150
+    alias :barkbark14,180
+    def wagwag16,204
+    alias_method :wigglewiggle18,224
+    def EatFoodEatFood20,256
+    alias :ConsumeConsume22,280

@@ -37,17 +37,27 @@ func walkDir(writer *bufio.Writer, path string, info os.FileInfo, err error) err
 	return nil
 }
 
-var version = "1.0.0"
+var version = "1.1.0"
 
 func main() {
 	var showVersion bool = false
+	var showHelp    bool = false
 
-	flag.BoolVar(&showVersion, "v", false, "Display the version number")
+	flag.BoolVar(&showVersion, "v",    false, "Display the version number")
+	flag.BoolVar(&showHelp,    "h",    false, "Display help text")
+	flag.BoolVar(&showHelp,    "help", false, "Display help text")
 	flag.Parse()
 
 	if showVersion {
 		fmt.Println(version)
 		os.Exit(0)
+	}
+
+	if showHelp {
+		fmt.Println("Usage: gofmt [options] [file...]")
+		fmt.Println("")
+		fmt.Println("Options are:")
+		flag.PrintDefaults()
 	}
 
 	fo, _ := os.Create("TAGS")

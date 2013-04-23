@@ -2,7 +2,7 @@
 
 ## Tags
 
-I got tired of exuberant tags failing on Ruby code, so I wrote a
+I got tired of exuberant ctags failing on Ruby code, so I wrote a
 version in go.
 
 Features:
@@ -10,7 +10,7 @@ Features:
 * Ruby only
 * Emacs TAGS file only
 * No command line options
-* Fast
+* But it's **fast**
 
 Detects:
 
@@ -23,11 +23,12 @@ Detects:
 ## Usage:
 
 ```
-$ gotags
+$ gotags file [file...]
 ```
 
-or
+Analyze all files listed in the command line. If the file is a
+directory, then recursively analyze all the files in that directory.
+If no files are listed, then the current directory ('.') is assumed.
 
-```
-$ gotags directories...
-```
+Only <code>.rb</code> files are actually handled, all other files are
+silently ignored.

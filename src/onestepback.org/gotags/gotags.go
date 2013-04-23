@@ -8,35 +8,30 @@ import (
 	"path/filepath"
 )
 
-type Location struct {
-	LineCount, ByteCount int
-}
-
 func processFile(writer *bufio.Writer, path string) {
-	loc := Location { LineCount: 1, ByteCount: 0 }
 	tag := NewTag(path)
 	ext := filepath.Ext(path)
 	if ext == ".rb" || ext == ".rake" || filepath.Base(path) == "Rakefile"  {
-		f, _ := os.Open(path)
-		r := bufio.NewReader(f)
-		var err error = nil
-		var line string
+		source, err := OpenLineSource(path)
+		if err != nil {
+			fmt.Println("Error opening file '" + path + "': " + err.Error())
+			return
+		}
+		defer source.Close()
 		rset := NewRuleSet()
 		for {
-			line, err = r.ReadString('\n')
+			line, err := source.ReadLine()
 			if err != nil {
 				break
 			}
-			rset.CheckLine(tag, line, loc)
-			loc.LineCount++
-			loc.ByteCount += len(line)
+			rset.CheckLine(tag, line, source.Loc)
 		}
 		tag.WriteOn(writer)
 	}
 }
 
 func walkDir(writer *bufio.Writer, path string, info os.FileInfo, err error) error {
-	if ! info.IsDir() {
+	if info != nil && ! info.IsDir() {
 		processFile(writer, path)
 	}
 	return nil

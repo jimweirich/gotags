@@ -30,8 +30,8 @@ Analyze all files listed in the command line. If the file is a
 directory, then recursively analyze all the files in that directory.
 If no files are listed, then the current directory ('.') is assumed.
 
-Only <code>.rb</code> files are actually handled, all other files are
-silently ignored.
+Only <code>.rb</code>, <code>.rake</code> and <code>Rakefile</code>
+files are actually handled, all other files are silently ignored.
 
 ## Building
 

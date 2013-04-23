@@ -14,5 +14,6 @@ module Animal
 
     def wag
     end
+    alias_method :wiggle, :wag
   end
 end

@@ -62,7 +62,7 @@ var RubyRules = []*Rule {
 	NewRule("^[ \t]*def[ \t]+((self\\.)?[a-z0-9_]+(!?)?)", 1, 0, false),
 	NewRule("^[ \t]*([A-Z][A-Za-z0-9_]*)[ \t]*=", 1, 0, false),
 	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:a-z0-9_, ]+)", 2, 0, true),
-	NewRule("^[ \t]*alias[ \t]+:?([A-Za-z0-9_]+)", 1, 0, false),
+	NewRule("^[ \t]*alias(_method)?[ \t]+:?([A-Za-z0-9_]+)", 2, 0, false),
 }
 
 type RuleSet struct {

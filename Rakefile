@@ -2,7 +2,7 @@ require 'rake/clean'
 
 CLOBBER.include("bin", "TAGS")
 
-task :default => :build
+task :default => :check
 
 desc "Print the expected GOPATH"
 task :printenv do
@@ -26,13 +26,15 @@ end
 
 file "bin/gotags" => :build
 
-file "TAGS" => ["bin/gotags"] do
+TEST_FILES = FileList['testdata/**/*.rb']
+
+file "TAGS" => ["bin/gotags"] + TEST_FILES do
   sh "bin/gotags testdata"
 end
 
 desc "Check that we produce a compatible TAGS file"
 task :check => ["TAGS"] do
-  sh "diff -u TAGS testdata/expected_tags.out"
+  sh "diff -u testdata/expected_tags.out TAGS"
 end
 
 namespace "check" do

@@ -7,7 +7,7 @@ module AnimalAnimal1,0
     attr_reader :tail, :head,tail9,81
     attr_reader :tail, :head,head9,81
     attr_reader :tail, :head,feet9,81
-    def speakspeak12,124
-    alias :barkbark14,154
-    def wagwag16,178
-    alias_method :wigglewiggle18,198
+    def speakspeak12,154
+    alias :barkbark14,184
+    def wagwag16,208
+    alias_method :wigglewiggle18,228

@@ -23,7 +23,9 @@ func (self *Tag) Init(path string) {
 }
 
 func (self *Tag) Add(tagname, line string, loc Location) {
-	self.Data = self.Data + self.DataLineFor(tagname, line, loc)
+	if tagname != "" {
+		self.Data = self.Data + self.DataLineFor(tagname, line, loc)
+	}
 }
 
 func(self *Tag) DataLineFor(tagname, line string, loc Location) string {

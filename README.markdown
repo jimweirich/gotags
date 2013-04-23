@@ -2,8 +2,9 @@
 
 ## Tags
 
-I got tired of exuberant ctags failing on Ruby code, so I wrote a
-version in go.
+I got tired of exuberant ctags failing on Ruby code (see
+https://gist.github.com/jimweirich/5440424), so I wrote a version in
+go.
 
 Features:
 

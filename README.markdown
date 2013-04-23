@@ -64,8 +64,5 @@ the repository for details.
 * Source: http://github.com/jimweirich/gotags
 * Clone URL: git://github.com/jimweirich/gotags.git
 * Issues: https://github.com/jimweirich/gotags/issues
-* Binary Versions:
-  * [Mac OSX binary](http://onestepback.org/download/gotags-1.0.0-darwin-x86_64.tgz "TGZ File")
-
-<!--  LocalWords:  executables
- -->
+* Platform executables:
+  * [Mac OSX](http://onestepback.org/download/gotags-1.0.0-darwin-x86_64.tgz "TGZ File")

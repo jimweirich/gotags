@@ -22,13 +22,13 @@ func (self *Tag) Init(path string) {
 	self.Data = ""
 }
 
-func (self *Tag) Add(tagname, line string, lineCount, byteCount int) {
-	self.Data = self.Data + self.DataLineFor(tagname, line, lineCount, byteCount)
+func (self *Tag) Add(tagname, line string, loc Location) {
+	self.Data = self.Data + self.DataLineFor(tagname, line, loc)
 }
 
-func(self *Tag) DataLineFor(tagname, line string, lineCount, byteCount int) string {
+func(self *Tag) DataLineFor(tagname, line string, loc Location) string {
 	line = strings.TrimRight(line, "\n")
-	result := fmt.Sprintf("%s\x7f%s\x01%d,%d\n", line, tagname, lineCount, byteCount)
+	result := fmt.Sprintf("%s\x7f%s\x01%d,%d\n", line, tagname, loc.LineCount, loc.ByteCount)
 	return result
 }
 

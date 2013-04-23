@@ -21,4 +21,6 @@ module Animal
     end
     alias :Consume :Eat
   end
+
+  Mammal = Stuct.new(:head, :feet)
 end

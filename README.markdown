@@ -50,6 +50,8 @@ $ go install onestepback.org/gotags
 $ cp bin/gotags SOMEWHERE_IN_YOUR_PATH
 ```
 
+See the [Links Section](#links) for links to binary executables.
+
 ## License
 
 Copyright 2013 by Jim Weirich
@@ -64,3 +66,6 @@ the repository for details.
 * Issues: https://github.com/jimweirich/gotags/issues
 * Binary Versions:
   * [Mac OSX binary](http://onestepback.org/download/gotags-1.0.0-darwin-x86_64.tgz "TGZ File")
+
+<!--  LocalWords:  executables
+ -->

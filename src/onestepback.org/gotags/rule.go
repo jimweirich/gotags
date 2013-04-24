@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-type Strategy interface {
+type TagAdder interface {
 	Add(tag *Tag, tagname, defstring string, matches []string, loc Location)
 }
 
@@ -14,7 +14,7 @@ type Rule struct {
 	TagIndex int
 	DefIndex int
 	IsMulti  bool
-	AddStrategy Strategy
+	Adder    TagAdder
 }
 
 func NewRule(pattern string, tagIndex, defIndex int) *Rule {
@@ -27,12 +27,12 @@ func (self *Rule) Init(pattern string, tagIndex, defIndex int) *Rule {
 	self.Pattern = regexp.MustCompile(pattern)
 	self.TagIndex = tagIndex
 	self.DefIndex = defIndex
-	self.AddStrategy = SingleAddStrategy {}
+	self.Adder = AddSingleTag {}
 	return self
 }
 
-func (self *Rule) With(s Strategy) *Rule {
-	self.AddStrategy = s
+func (self *Rule) With(adder TagAdder) *Rule {
+	self.Adder = adder
 	return self
 }
 
@@ -52,7 +52,7 @@ func (self *Rule) firstLineOnly(str string) string {
 func (self *Rule) Apply(tag *Tag, data string, loc Location) bool {
 	tagname, defstring, matches, ok := self.Match(data)
 	if ok {
-		self.AddStrategy.Add(tag, tagname, defstring, matches, loc)
+		self.Adder.Add(tag, tagname, defstring, matches, loc)
 		return true
 	}
 	return false
@@ -60,9 +60,9 @@ func (self *Rule) Apply(tag *Tag, data string, loc Location) bool {
 
 // Basic add strategy used for 90% of the rules
 
-type SingleAddStrategy struct {
+type AddSingleTag struct {
 }
 
-func (self SingleAddStrategy) Add(tag *Tag, tagname, defstring string, matches []string, loc Location) {
+func (self AddSingleTag) Add(tag *Tag, tagname, defstring string, matches []string, loc Location) {
 	tag.Add(tagname, defstring, loc)
 }

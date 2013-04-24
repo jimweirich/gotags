@@ -36,7 +36,8 @@ files are actually handled, all other files are silently ignored.
 
 **Command Line Options:**
 
-* <code>-v</code> -- Print the version of the program and exit.
+* <code>-v</code> -- Display the version of the program and exit.
+* <code>-h</code> -- Display a help message.
 
 ## Building
 

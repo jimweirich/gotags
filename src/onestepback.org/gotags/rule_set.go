@@ -6,7 +6,7 @@ import (
 )
 
 type Strategy interface {
-	Add(tag *Tag, tagname, defstring string, loc Location)
+	Add(tag *Tag, tagname, defstring string, matches []string, loc Location)
 }
 
 type Rule struct {
@@ -36,12 +36,12 @@ func (self *Rule) With(s Strategy) *Rule {
 	return self
 }
 
-func (self *Rule) Match(data string) (string, string, bool) {
+func (self *Rule) Match(data string) (string, string, []string, bool) {
 	matches := self.Pattern.FindStringSubmatch(data)
 	if len(matches) > 0 {
-		return matches[self.TagIndex], self.firstLineOnly(matches[self.DefIndex]), true
+		return matches[self.TagIndex], self.firstLineOnly(matches[self.DefIndex]), matches, true
 	}
-	return "", "", false
+	return "", "", []string{}, false
 }
 
 func (self *Rule) firstLineOnly(str string) string {
@@ -50,9 +50,9 @@ func (self *Rule) firstLineOnly(str string) string {
 }
 
 func (self *Rule) Apply(tag *Tag, data string, loc Location) bool {
-	tagname, defstring, ok := self.Match(data)
+	tagname, defstring, matches, ok := self.Match(data)
 	if ok {
-		self.AddStrategy.Add(tag, tagname, defstring, loc)
+		self.AddStrategy.Add(tag, tagname, defstring, matches, loc)
 		return true
 	}
 	return false
@@ -61,25 +61,27 @@ func (self *Rule) Apply(tag *Tag, data string, loc Location) bool {
 type SingleAddStrategy struct {
 }
 
-func (self SingleAddStrategy) Add(tag *Tag, tagname, defstring string, loc Location) {
+func (self SingleAddStrategy) Add(tag *Tag, tagname, defstring string, matches []string, loc Location) {
 	tag.Add(tagname, defstring, loc)
 }
 
 type MultiAddStrategy struct {
 }
 
-func (self MultiAddStrategy) Add(tag *Tag, tagname, defstring string, loc Location) {
+func (self MultiAddStrategy) Add(tag *Tag, tagname, defstring string, matches []string, loc Location) {
 	for _, name := range strings.Split(tagname, ",") {
 		name = strings.Trim(name, " \t\n*:")
 		tag.Add(name, defstring, loc)
 	}
 }
 
-type ClassAddStrategy struct {
+type GoClassAddStrategy struct {
+	classIndex int
 }
 
-func (self ClassAddStrategy) Add(tag *Tag, tagname, defstring string, loc Location) {
+func (self GoClassAddStrategy) Add(tag *Tag, tagname, defstring string, matches []string, loc Location) {
 	tag.Add(tagname, defstring, loc)
+	tag.Add(matches[self.classIndex] + "." + tagname, defstring, loc)
 }
 
 type RuleSet struct {
@@ -107,7 +109,8 @@ var RubyRulesList = []*Rule {
 	NewRule("^[ \t]*(class|module)[ \t]+([A-Z][A-Za-z0-9_]+::)*([A-Z][A-Za-z0-9_]*)", 3, 0),
 	NewRule("^[ \t]*def[ \t]+((self\\.)?[A-Za-z0-9][A-Za-z0-9_]*(!?)?)", 1, 0),
 	NewRule("^[ \t]*([A-Z][A-Za-z0-9_]*)[ \t]*=", 1, 0),
-	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:A-Za-z0-9_, \t\n]+)", 2, 0).With(MultiAddStrategy{}),
+	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:A-Za-z0-9_, \t\n]+)", 2, 0).
+		With(MultiAddStrategy { }),
 	NewRule("^[ \t]*alias(_method)?[ \t]+:?([A-Za-z0-9_]+)", 2, 0),
 }
 
@@ -115,7 +118,7 @@ var GoRulesList = []*Rule {
 	NewRule("^(func|var)[ \t]+([A-Za-z0-9_]+)", 2, 0),
 	NewRule("^type[ \t]+([A-Za-z0-9_]+)[ \t]+(struct|interface)", 1, 0),
 	NewRule("^(func|var)[ \t]+\\([a-zA-Z0-9_]+[ \t*]+([A-Z][A-Za-z0-9_]+)\\)[ \t]*([A-Za-z0-9_]+)", 3, 0).
-		With(ClassAddStrategy {}),
+		With(GoClassAddStrategy {classIndex: 2}),
 }
 
 var Rules = map[string] *RuleSet {

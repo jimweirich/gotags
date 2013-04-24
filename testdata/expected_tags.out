@@ -1,8 +1,9 @@
 
-testdata/go/example.go,163
+testdata/go/example.go,203
 type Strategy interfaceStrategy1,0
 type Rule structRule3,28
 func (self *Rule) ApplyApply5,49
+func (self *Rule) ApplyRule.Apply5,49
 func NewRuleNewRule7,84
 var RubyRulesListRubyRulesList9,161
 

@@ -77,7 +77,7 @@ EXE_PATH = "dist/#{EXE_FILE}"
 TAR_PATH = "dist/#{TAR_FILE}"
 
 desc "Make a platform binary executable"
-task :executable => EXE_PATH
+task :exe => EXE_PATH
 
 desc "Make a distribution zip file"
 task :tar => TAR_PATH
@@ -105,6 +105,7 @@ file TAR_PATH => [EXE_PATH] do
   end
 end
 
+desc "Upload the executable to the download site"
 task :upload => TAR_PATH do
   sh "scp #{TAR_PATH} linode:sites/onestepback.org/download"
 end

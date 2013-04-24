@@ -1,4 +1,11 @@
 
+testdata/go/example.go,163
+type Strategy interfaceStrategy1,0
+type Rule structRule3,28
+func (self *Rule) ApplyApply5,49
+func NewRuleNewRule7,84
+var RubyRulesListRubyRulesList9,161
+
 testdata/ruby/dog.rb,511
 module AnimalAnimal1,0
   VERSION =VERSION3,15
@@ -16,41 +23,3 @@ module AnimalAnimal1,0
     def EatFoodEatFood20,256
     alias :ConsumeConsume22,280
   Mammal =Mammal25,311
-
-src/onestepback.org/gotags/gotags.go,112
-func processFileprocessFile11,73
-func walkDirwalkDir36,599
-var versionversion43,766
-func mainmain45,791
-
-src/onestepback.org/gotags/line_source.go,230
-func OpenLineSourceOpenLineSource15,146
-func (self *LineSource) InitInit21,278
-func (self *LineSource) ReadLineReadLine32,517
-func (self *LineSource) CloseClose46,823
-func (self *LineSource) endsInCommaendsInComma50,879
-
-src/onestepback.org/gotags/location.go,72
-func NewLocationNewLocation7,66
-func (self Location) BumpBump14,153
-
-src/onestepback.org/gotags/rule_set.go,503
-func NewRuleNewRule15,137
-func (self *Rule) InitInit21,301
-func (self *Rule) MatchMatch28,504
-func (self *Rule) firstLineOnlyfirstLineOnly36,749
-func (self *Rule) ApplyApply41,859
-func (self *Rule) AddSingleAddSingle54,1144
-func (self *Rule) AddMultiAddMulti58,1262
-func NewRuleSetNewRuleSet69,1511
-func (self *RuleSet) InitInit75,1627
-func (self *RuleSet) CheckLineCheckLine79,1693
-var RubyRulesListRubyRulesList86,1861
-var GoRulesListGoRulesList94,2298
-var RulesRules99,2499
-
-src/onestepback.org/gotags/tag.go,132
-func NewTagNewTag14,100
-func (self *Tag) InitInit20,188
-func (self *Tag) AddAdd25,262
-func (self *Tag) WriteOnWriteOn37,630

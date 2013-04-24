@@ -38,7 +38,7 @@ file "bin/gotags" => :build
 TEST_FILES = FileList['testdata/**/*.rb']
 
 file "TAGS" => ["bin/gotags"] + TEST_FILES do
-  sh "bin/gotags testdata"
+  sh "bin/gotags testdata src"
 end
 
 desc "Check that we produce a compatible TAGS file"

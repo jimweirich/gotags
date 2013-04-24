@@ -45,7 +45,7 @@ Make sure you have a recent installation of the Go language on your
 system.  Then do the following:
 
 ```
-$ git checkout git://github.com/jimweirich/gotags.git
+$ git clone git://github.com/jimweirich/gotags.git
 $ cd gotags
 $ go install onestepback.org/gotags
 $ cp bin/gotags SOMEWHERE_IN_YOUR_PATH

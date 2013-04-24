@@ -1,6 +1,6 @@
 require 'rake/clean'
 
-CLOBBER.include("bin", "TAGS", "dist")
+CLOBBER.include("bin", "TAGS", "dist", "testdata/TAGS")
 
 PROG = "bin/gotags"
 
@@ -35,20 +35,24 @@ end
 
 file "bin/gotags" => :build
 
-TEST_FILES = FileList['testdata/**/*.rb']
+TEST_FILES = FileList['testdata/**/*'].exclude("testdata/TAGS")
 
-file "TAGS" => ["bin/gotags"] + TEST_FILES do
-  sh "bin/gotags testdata"
+file "testdata/TAGS" => ["bin/gotags"] + TEST_FILES do
+  Dir.chdir("testdata") do
+    sh "../bin/gotags ."
+  end
 end
 
 desc "Check that we produce a compatible TAGS file"
-task :check => ["TAGS"] do
-  sh "diff -u testdata/expected_tags.out TAGS"
+task :check => ["testdata/TAGS"] do
+  Dir.chdir("testdata") do
+    sh "diff -u expected_tags.out TAGS"
+  end
 end
 
 namespace "check" do
-  task :update => ["TAGS"] do
-    cp "TAGS", "testdata/expected_tags.out"
+  task :update => ["testdata/TAGS"] do
+    cp "testdata/TAGS", "testdata/expected_tags.out"
   end
 end
 

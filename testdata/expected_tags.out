@@ -1,5 +1,5 @@
 
-testdata/go/example.go,203
+go/example.go,203
 type Strategy interfaceStrategy1,0
 type Rule structRule3,28
 func (self *Rule) ApplyApply5,49
@@ -7,7 +7,7 @@ func (self *Rule) ApplyRule.Apply5,49
 func NewRuleNewRule7,84
 var RubyRulesListRubyRulesList9,161
 
-testdata/ruby/dog.rb,511
+ruby/dog.rb,511
 module AnimalAnimal1,0
   VERSION =VERSION3,15
   class BaseBase5,34

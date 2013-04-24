@@ -11,14 +11,17 @@ import (
 func processFile(writer *bufio.Writer, path string) {
 	tag := NewTag(path)
 	ext := filepath.Ext(path)
-	if ext == ".rb" || ext == ".rake" || filepath.Base(path) == "Rakefile"  {
+	if ext == ".rake" || filepath.Base(path) == "Rakefile"  {
+		ext = ".rb"
+	}
+	rset := Rules[ext]
+	if rset != nil {
 		source, err := OpenLineSource(path)
 		if err != nil {
 			fmt.Println("Error opening file '" + path + "': " + err.Error())
 			return
 		}
 		defer source.Close()
-		rset := NewRuleSet()
 		for {
 			line, err := source.ReadLine()
 			if err != nil {
@@ -54,10 +57,11 @@ func main() {
 	}
 
 	if showHelp {
-		fmt.Println("Usage: gofmt [options] [file...]")
+		fmt.Println("Usage: gotags [options] [file...]")
 		fmt.Println("")
 		fmt.Println("Options are:")
 		flag.PrintDefaults()
+		os.Exit(0)
 	}
 
 	fo, _ := os.Create("TAGS")

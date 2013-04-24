@@ -62,26 +62,18 @@ func (self *Rule) AddMulti(tag *Tag, tagname, defstring string, loc Location) {
 	}
 }
 
-var RubyRules = []*Rule {
-	NewRule("^[ \t]*(class|module)[ \t]+([A-Z][A-Za-z0-9_]+::)*([A-Z][A-Za-z0-9_]*)", 3, 0, false),
-	NewRule("^[ \t]*def[ \t]+((self\\.)?[A-Za-z0-9][A-Za-z0-9_]*(!?)?)", 1, 0, false),
-	NewRule("^[ \t]*([A-Z][A-Za-z0-9_]*)[ \t]*=", 1, 0, false),
-	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:A-Za-z0-9_, \t\n]+)", 2, 0, true),
-	NewRule("^[ \t]*alias(_method)?[ \t]+:?([A-Za-z0-9_]+)", 2, 0, false),
-}
-
 type RuleSet struct {
 	rules []*Rule
 }
 
-func NewRuleSet() *RuleSet {
-	result := RuleSet {}
-	result.Init()
+func NewRuleSet(listOfRules []*Rule) *RuleSet {
+	result := RuleSet { }
+	result.Init(listOfRules)
 	return &result
 }
 
-func (self *RuleSet) Init() {
-	self.rules = RubyRules
+func (self *RuleSet) Init(rules []*Rule) {
+	self.rules = rules
 }
 
 func (self *RuleSet) CheckLine(tag *Tag, s string, loc Location) {
@@ -89,4 +81,22 @@ func (self *RuleSet) CheckLine(tag *Tag, s string, loc Location) {
 		applied := rule.Apply(tag, s, loc)
 		if applied { break }
 	}
+}
+
+var RubyRulesList = []*Rule {
+	NewRule("^[ \t]*(class|module)[ \t]+([A-Z][A-Za-z0-9_]+::)*([A-Z][A-Za-z0-9_]*)", 3, 0, false),
+	NewRule("^[ \t]*def[ \t]+((self\\.)?[A-Za-z0-9][A-Za-z0-9_]*(!?)?)", 1, 0, false),
+	NewRule("^[ \t]*([A-Z][A-Za-z0-9_]*)[ \t]*=", 1, 0, false),
+	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:A-Za-z0-9_, \t\n]+)", 2, 0, true),
+	NewRule("^[ \t]*alias(_method)?[ \t]+:?([A-Za-z0-9_]+)", 2, 0, false),
+}
+
+var GoRulesList = []*Rule {
+	NewRule("^(func|var)[ \t]+([A-Za-z0-9_]+)", 2, 0, false),
+	NewRule("^(func|var)[ \t]+\\([a-zA-Z0-9_]+[ \t*]+([A-Z][A-Za-z0-9_]+)\\)[ \t]*([A-Za-z0-9_]+)", 3, 0, false),
+}
+
+var Rules = map[string] *RuleSet {
+	".rb": NewRuleSet(RubyRulesList),
+	".go": NewRuleSet(GoRulesList),
 }

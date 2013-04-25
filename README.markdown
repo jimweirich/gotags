@@ -8,18 +8,25 @@ go.
 
 Features:
 
-* Ruby only
+* Ruby & Go only
 * Emacs TAGS file only
 * Minimal command line arguments
 * But it's **fast**
 
 Detects:
 
-* Classes and Modules
-* Methods
-* Constants
-* attr_reader, attr_writer and attr_accessor definitions
-* Aliases
+* Ruby (extensions <code>.rb</code> and <code>.rake</code>, also files named <code>Rakefile</code>)
+  * Classes and Modules
+  * Methods
+  * Constants
+  * attr_reader, attr_writer and attr_accessor definitions
+  * Aliases
+
+* Go (extension <code>.go</code>)
+  * Top level functions and variables
+  * Interfaces
+  * Structs
+  * Methods
 
 ## Usage:
 
@@ -31,8 +38,8 @@ Analyze all files listed in the command line. If the file is a
 directory, then recursively analyze all the files in that directory.
 If no files are listed, then the current directory ('.') is assumed.
 
-Only <code>.rb</code>, <code>.rake</code> and <code>Rakefile</code>
-files are actually handled, all other files are silently ignored.
+Only the files and extensions listed above are actually handled, all
+other files are silently ignored.
 
 **Command Line Options:**
 

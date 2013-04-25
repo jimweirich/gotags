@@ -6,14 +6,13 @@ import (
 )
 
 type TagAdder interface {
-	Add(tag tagRecorder, tagname, defstring string, matches []string, loc Location)
+	Add(tag tagRecorder, matches []string, loc Location)
 }
 
 type Rule struct {
 	Pattern  *regexp.Regexp
 	TagIndex int
 	DefIndex int
-	IsMulti  bool
 	Adder    TagAdder
 }
 
@@ -27,7 +26,7 @@ func (self *Rule) init(pattern string, tagIndex, defIndex int) *Rule {
 	self.Pattern = regexp.MustCompile(pattern)
 	self.TagIndex = tagIndex
 	self.DefIndex = defIndex
-	self.Adder = AddSingleTag {}
+	self.Adder = AddSingleTag {tagIndex, 0}
 	return self
 }
 
@@ -36,15 +35,7 @@ func (self *Rule) With(adder TagAdder) *Rule {
 	return self
 }
 
-func (self *Rule) match(data string) (string, string, []string, bool) {
-	matches := self.Pattern.FindStringSubmatch(data)
-	if len(matches) > 0 {
-		return matches[self.TagIndex], self.firstLineOnly(matches[self.DefIndex]), matches, true
-	}
-	return "", "", []string{}, false
-}
-
-func (self *Rule) firstLineOnly(str string) string {
+func FirstLineOnly(str string) string {
 	splits := strings.Split(str, "\n")
 	return splits[0]
 }
@@ -54,18 +45,20 @@ type tagRecorder interface {
 }
 
 func (self *Rule) Apply(tag tagRecorder, data string, loc Location) bool {
-	tagname, defstring, matches, ok := self.match(data)
-	if ok {
-		self.Adder.Add(tag, tagname, defstring, matches, loc)
+	matches := self.Pattern.FindStringSubmatch(data)
+	if len(matches) > 0 {
+		self.Adder.Add(tag, matches, loc)
+		return true
 	}
-	return ok
+	return false
 }
 
 // Basic add strategy used for most of the rules
 
 type AddSingleTag struct {
+	nameIndex, defIndex int
 }
 
-func (self AddSingleTag) Add(tag tagRecorder, tagname, defstring string, matches []string, loc Location) {
-	tag.Add(tagname, defstring, loc)
+func (self AddSingleTag) Add(tag tagRecorder, matches []string, loc Location) {
+	tag.Add(matches[self.nameIndex], FirstLineOnly(matches[self.defIndex]), loc)
 }

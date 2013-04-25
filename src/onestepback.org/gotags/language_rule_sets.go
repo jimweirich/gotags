@@ -12,7 +12,7 @@ type AddMultipleTags struct {
 
 func (self AddMultipleTags) Add(tag tagRecorder, matches []string, loc Location) {
 	names := matches[self.namesIndex]
-	defstring := FirstLineOnly(matches[self.defIndex])
+	defstring := matches[self.defIndex]
 	for _, name := range strings.Split(names, ",") {
 		name = strings.Trim(name, " \t\n*:")
 		tag.Add(name, defstring, loc)
@@ -28,7 +28,7 @@ type AddGoClassTag struct {
 func (self AddGoClassTag) Add(tag tagRecorder, matches []string, loc Location) {
 	name := matches[self.nameIndex]
 	classname := matches[self.classIndex]
-	defstring := FirstLineOnly(matches[self.defIndex])
+	defstring := matches[self.defIndex]
 	tag.Add(name, defstring, loc)
 	tag.Add(classname + "." + name, defstring, loc)
 }

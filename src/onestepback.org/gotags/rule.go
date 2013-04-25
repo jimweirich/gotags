@@ -1,7 +1,6 @@
 package main
 
 import (
-	"strings"
 	"regexp"
 )
 
@@ -35,11 +34,6 @@ func (self *Rule) With(adder TagAdder) *Rule {
 	return self
 }
 
-func FirstLineOnly(str string) string {
-	splits := strings.Split(str, "\n")
-	return splits[0]
-}
-
 type tagRecorder interface {
 	Add(tagname, defstring string, loc Location)
 }
@@ -60,5 +54,5 @@ type AddSingleTag struct {
 }
 
 func (self AddSingleTag) Add(tag tagRecorder, matches []string, loc Location) {
-	tag.Add(matches[self.nameIndex], FirstLineOnly(matches[self.defIndex]), loc)
+	tag.Add(matches[self.nameIndex], matches[self.defIndex], loc)
 }

@@ -17,8 +17,13 @@ func NewTag(path string) *Tag {
 
 func (self *Tag) Add(tagname, line string, loc Location) {
 	if tagname != "" {
-		self.Data = self.Data + self.dataLineFor(tagname, line, loc)
+		self.Data = self.Data + self.dataLineFor(tagname, self.firstLineOnly(line), loc)
 	}
+}
+
+func (self *Tag) firstLineOnly(str string) string {
+	splits := strings.Split(str, "\n")
+	return splits[0]
 }
 
 func(self *Tag) dataLineFor(tagname, line string, loc Location) string {

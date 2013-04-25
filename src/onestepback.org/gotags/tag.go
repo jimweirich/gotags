@@ -22,14 +22,14 @@ func (self *Tag) Add(tagname, line string, loc Location) {
 }
 
 func(self *Tag) dataLineFor(tagname, line string, loc Location) string {
-	line = strings.TrimRight(self.firstLineOnly(line), "\n")
+	line = self.firstLineOnly(line)
 	result := fmt.Sprintf("%s\x7f%s\x01%d,%d\n", line, tagname, loc.LineCount, loc.ByteCount)
 	return result
 }
 
 func (self *Tag) firstLineOnly(str string) string {
 	splits := strings.Split(str, "\n")
-	return splits[0]
+	return strings.TrimRight(splits[0], "\n")
 }
 
 type tagWriter interface {

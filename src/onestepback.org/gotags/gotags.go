@@ -58,7 +58,7 @@ func main() {
 
 	if showHelp {
 		fmt.Println("Usage: gotags [options] [file...]")
-		fmt.Println("")
+		fmt.Println()
 		fmt.Println("Options are:")
 		flag.PrintDefaults()
 		os.Exit(0)

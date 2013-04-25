@@ -32,3 +32,14 @@ func TestTag(t *testing.T) {
 
 	assert.StringEqual(t, expected, s.data)
 }
+
+func TestTagWithNoDefs(t *testing.T) {
+	tag := NewTag("empty.go")
+
+	s := StringIo { "" }
+	tag.WriteOn(&s)
+
+	expected := ""
+
+	assert.StringEqual(t, expected, s.data)
+}

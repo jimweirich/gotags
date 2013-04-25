@@ -6,18 +6,18 @@ import (
 )
 
 type Tag struct {
-	Path string
-	Data string
+	path string
+	data string
 }
 
 func NewTag(path string) *Tag {
-	result := Tag { Path: path, Data: "" }
+	result := Tag { path: path }
 	return &result
 }
 
 func (self *Tag) Add(tagname, line string, loc Location) {
 	if tagname != "" {
-		self.Data = self.Data + self.dataLineFor(tagname, self.firstLineOnly(line), loc)
+		self.data = self.data + self.dataLineFor(tagname, line, loc)
 	}
 }
 
@@ -42,10 +42,10 @@ type tagWriter interface {
 }
 
 func (self *Tag) WriteOn(w tagWriter) {
-	bytes := len(self.Data)
+	bytes := len(self.data)
 	if bytes > 0 {
 		w.WriteString("\x0c\n")
-		w.WriteString(fmt.Sprintf("%s,%d\n", self.Path, bytes))
-		w.WriteString(self.Data)
+		w.WriteString(fmt.Sprintf("%s,%d\n", self.path, bytes))
+		w.WriteString(self.data)
 	}
 }

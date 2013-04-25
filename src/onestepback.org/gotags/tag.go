@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"strings"
 )
@@ -12,29 +11,27 @@ type Tag struct {
 }
 
 func NewTag(path string) *Tag {
-	result := Tag {}
-	result.Init(path)
+	result := Tag { Path: path, Data: "" }
 	return &result
-}
-
-func (self *Tag) Init(path string) {
-	self.Path = path
-	self.Data = ""
 }
 
 func (self *Tag) Add(tagname, line string, loc Location) {
 	if tagname != "" {
-		self.Data = self.Data + self.DataLineFor(tagname, line, loc)
+		self.Data = self.Data + self.dataLineFor(tagname, line, loc)
 	}
 }
 
-func(self *Tag) DataLineFor(tagname, line string, loc Location) string {
+func(self *Tag) dataLineFor(tagname, line string, loc Location) string {
 	line = strings.TrimRight(line, "\n")
 	result := fmt.Sprintf("%s\x7f%s\x01%d,%d\n", line, tagname, loc.LineCount, loc.ByteCount)
 	return result
 }
 
-func (self *Tag) WriteOn(w *bufio.Writer) {
+type stringWriter interface {
+	WriteString(string) (int, error)
+}
+
+func (self *Tag) WriteOn(w stringWriter) {
 	bytes := len(self.Data)
 	if bytes > 0 {
 		w.WriteString("\x0c\n")

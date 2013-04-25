@@ -6,7 +6,7 @@ import (
 )
 
 type TagAdder interface {
-	Add(tag *Tag, tagname, defstring string, matches []string, loc Location)
+	Add(tag tagRecorder, tagname, defstring string, matches []string, loc Location)
 }
 
 type Rule struct {
@@ -19,11 +19,11 @@ type Rule struct {
 
 func NewRule(pattern string, tagIndex, defIndex int) *Rule {
 	result := Rule {}
-	result.Init(pattern, tagIndex, defIndex)
+	result.init(pattern, tagIndex, defIndex)
 	return &result
 }
 
-func (self *Rule) Init(pattern string, tagIndex, defIndex int) *Rule {
+func (self *Rule) init(pattern string, tagIndex, defIndex int) *Rule {
 	self.Pattern = regexp.MustCompile(pattern)
 	self.TagIndex = tagIndex
 	self.DefIndex = defIndex
@@ -36,7 +36,7 @@ func (self *Rule) With(adder TagAdder) *Rule {
 	return self
 }
 
-func (self *Rule) Match(data string) (string, string, []string, bool) {
+func (self *Rule) match(data string) (string, string, []string, bool) {
 	matches := self.Pattern.FindStringSubmatch(data)
 	if len(matches) > 0 {
 		return matches[self.TagIndex], self.firstLineOnly(matches[self.DefIndex]), matches, true
@@ -49,20 +49,23 @@ func (self *Rule) firstLineOnly(str string) string {
 	return splits[0]
 }
 
-func (self *Rule) Apply(tag *Tag, data string, loc Location) bool {
-	tagname, defstring, matches, ok := self.Match(data)
-	if ok {
-		self.Adder.Add(tag, tagname, defstring, matches, loc)
-		return true
-	}
-	return false
+type tagRecorder interface {
+	Add(tagname, defstring string, loc Location)
 }
 
-// Basic add strategy used for 90% of the rules
+func (self *Rule) Apply(tag tagRecorder, data string, loc Location) bool {
+	tagname, defstring, matches, ok := self.match(data)
+	if ok {
+		self.Adder.Add(tag, tagname, defstring, matches, loc)
+	}
+	return ok
+}
+
+// Basic add strategy used for most of the rules
 
 type AddSingleTag struct {
 }
 
-func (self AddSingleTag) Add(tag *Tag, tagname, defstring string, matches []string, loc Location) {
+func (self AddSingleTag) Add(tag tagRecorder, tagname, defstring string, matches []string, loc Location) {
 	tag.Add(tagname, defstring, loc)
 }

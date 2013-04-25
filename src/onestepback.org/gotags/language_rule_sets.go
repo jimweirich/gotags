@@ -9,7 +9,7 @@ import (
 type AddMultipleTags struct {
 }
 
-func (self AddMultipleTags) Add(tag *Tag, tagname, defstring string, matches []string, loc Location) {
+func (self AddMultipleTags) Add(tag tagRecorder, tagname, defstring string, matches []string, loc Location) {
 	for _, name := range strings.Split(tagname, ",") {
 		name = strings.Trim(name, " \t\n*:")
 		tag.Add(name, defstring, loc)
@@ -22,7 +22,7 @@ type AddGoClassTag struct {
 	classIndex int
 }
 
-func (self AddGoClassTag) Add(tag *Tag, tagname, defstring string, matches []string, loc Location) {
+func (self AddGoClassTag) Add(tag tagRecorder, tagname, defstring string, matches []string, loc Location) {
 	tag.Add(tagname, defstring, loc)
 	tag.Add(matches[self.classIndex] + "." + tagname, defstring, loc)
 }

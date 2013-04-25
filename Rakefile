@@ -45,6 +45,8 @@ end
 
 desc "Check that we produce a compatible TAGS file"
 task :check => ["testdata/TAGS"] do
+  sh "go test -i onestepback.org/gotags"
+  sh "go test onestepback.org/gotags"
   Dir.chdir("testdata") do
     sh "diff -u expected_tags.out TAGS"
   end

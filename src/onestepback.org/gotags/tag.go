@@ -27,11 +27,11 @@ func(self *Tag) dataLineFor(tagname, line string, loc Location) string {
 	return result
 }
 
-type stringWriter interface {
+type tagWriter interface {
 	WriteString(string) (int, error)
 }
 
-func (self *Tag) WriteOn(w stringWriter) {
+func (self *Tag) WriteOn(w tagWriter) {
 	bytes := len(self.Data)
 	if bytes > 0 {
 		w.WriteString("\x0c\n")

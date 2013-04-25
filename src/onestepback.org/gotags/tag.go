@@ -21,11 +21,6 @@ func (self *Tag) Add(tagname, line string, loc Location) {
 	}
 }
 
-func (self *Tag) firstLineOnly(str string) string {
-	splits := strings.Split(str, "\n")
-	return splits[0]
-}
-
 func(self *Tag) dataLineFor(tagname, line string, loc Location) string {
 	line = strings.TrimRight(self.firstLineOnly(line), "\n")
 	result := fmt.Sprintf("%s\x7f%s\x01%d,%d\n", line, tagname, loc.LineCount, loc.ByteCount)

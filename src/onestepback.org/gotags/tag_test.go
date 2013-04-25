@@ -4,7 +4,7 @@ import (
 	"testing"
 	"onestepback.org/assert"
 )
-import . "strconv"
+import "strconv"
 
 type StringIo struct {
 	data string
@@ -27,7 +27,7 @@ func TestTag(t *testing.T) {
 		"def fun\x7ffun\x0110,123\n" +
 		"def g\x7fg\x0123,150\n"
 	expected := "\x0c\n" +
-		"file.go," + Itoa(len(defstring)) + "\n" +
+		"file.go," + strconv.Itoa(len(defstring)) + "\n" +
 		defstring
 
 	assert.StringEqual(t, expected, s.data)

@@ -5,16 +5,6 @@ import (
 	"testing"
 )
 
-type fauxRecorder struct {
-	name, def string
-	loc Location
-}
-func (self *fauxRecorder) Add(tagname, defstring string, loc Location) {
-	self.name = tagname
-	self.def = defstring
-	self.loc = loc
-}
-
 func TestRuleThatTriggers(t *testing.T) {
 	r := NewRule("^[ \t]*def ([a-z]+)", 1, 0)
 	recorder := &fauxRecorder { }

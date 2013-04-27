@@ -1,0 +1,7 @@
+(add-to-list
+ 'toggle-mapping-styles
+ '(go7
+   ("src/\\1_test.go" . "src/\\1.go")
+   ("\\1_test\.go"      . "\\1\.go")))
+
+(buffer-toggle-style 'go7)

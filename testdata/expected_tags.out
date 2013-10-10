@@ -24,3 +24,6 @@ module AnimalAnimal1,0
     def EatFoodEatFood20,256
     alias :ConsumeConsume22,280
   Mammal =Mammal25,311
+
+ruby/end_with_comma.rb,25
+attr_reader :foofoo1,0

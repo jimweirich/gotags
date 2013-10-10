@@ -36,6 +36,7 @@ func (self *LineSource) ReadLine() (string, error) {
 	var data string
 	for {
 		data, err = self.BufferedReader.ReadString('\n')
+		if err != nil { break }
 		self.NextLoc = self.NextLoc.Bump(data)
 		line = line + data
 		if ! self.endsInComma(line) { break }

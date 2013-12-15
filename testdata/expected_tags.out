@@ -7,7 +7,7 @@ func (self *Rule) ApplyRule.Apply5,49
 func NewRuleNewRule7,84
 var RubyRulesListRubyRulesList9,161
 
-ruby/dog.rb,511
+ruby/dog.rb,546
 module AnimalAnimal1,0
   VERSION =VERSION3,15
   class BaseBase5,34
@@ -23,7 +23,8 @@ module AnimalAnimal1,0
     alias_method :wigglewiggle18,224
     def EatFoodEatFood20,256
     alias :ConsumeConsume22,280
-  Mammal =Mammal25,311
+    def _internal_internal24,305
+  Mammal =Mammal28,338
 
 ruby/end_with_comma.rb,25
 attr_reader :foofoo1,0

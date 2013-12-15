@@ -20,6 +20,9 @@ module Animal
     def EatFood
     end
     alias :Consume :Eat
+
+    def _internal
+    end
   end
 
   Mammal = Stuct.new(:head, :feet)

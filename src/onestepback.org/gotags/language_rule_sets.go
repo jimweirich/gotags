@@ -36,9 +36,9 @@ func (self AddRubyClassMethod) Add(tag tagRecorder, matches []string, loc Locati
 
 var RubyRulesList = []*Rule {
 	NewRule("^[ \t]*(class|module)[ \t]+([A-Z][A-Za-z0-9_]+::)*([A-Z][A-Za-z0-9_]*)", 3, 0),
-	NewRule("^[ \t]*def[ \t]+(self\\.)([A-Za-z0-9][A-Za-z0-9_]*[!?=]?)", 1, 0).
+	NewRule("^[ \t]*def[ \t]+(self\\.)([A-Za-z_][A-Za-z0-9_]*[!?=]?)", 1, 0).
 		With(AddRubyClassMethod { 2, 0 }) ,
-	NewRule("^[ \t]*def[ \t]+([A-Za-z0-9][A-Za-z0-9_]*[!?=]?)", 1, 0),
+	NewRule("^[ \t]*def[ \t]+([A-Za-z_][A-Za-z0-9_]*[!?=]?)", 1, 0),
 	NewRule("^[ \t]*([A-Z][A-Za-z0-9_]*)[ \t]*=", 1, 0),
 	NewRule("^[ \t]*attr_(reader|writer|accessor)[ \t]+([:A-Za-z0-9_, \t\n]+)", 2, 0).
 		With(AddMultipleTags { 2, 0 }),

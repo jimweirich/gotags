@@ -73,5 +73,5 @@ the repository for details.
 * Clone URL: git://github.com/jimweirich/gotags.git
 * Issues: https://github.com/jimweirich/gotags/issues
 * Platform executables:
-  * [Mac OSX](http://onestepback.org/download/gotags-1.1.1-darwin-x86_64.tgz "TGZ File")
-  * [Linux-x86](http://onestepback.org/download/gotags-1.1.1-linux-x86_64.tgz "TGZ File")
+  * [Mac OSX Version 1.1.3](http://onestepback.org/download/gotags-1.1.3-darwin-x86_64.tgz "TGZ File")
+  * [Linux-x86 Version 1.1.1](http://onestepback.org/download/gotags-1.1.1-linux-x86_64.tgz "TGZ File")

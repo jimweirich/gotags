@@ -45,7 +45,7 @@ func walkDir(writer *bufio.Writer, path string, info os.FileInfo, err error) err
 	return nil
 }
 
-var version = "1.1.3"
+var version = "1.2.0"
 
 func main() {
 	var showVersion bool = false

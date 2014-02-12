@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 )
 
+var showVerbose bool = false	// Show verbose output
+
 func processFile(writer *bufio.Writer, path string) {
 	tag := NewTag(path)
 	ext := filepath.Ext(path)
@@ -16,6 +18,9 @@ func processFile(writer *bufio.Writer, path string) {
 	}
 	rset := Rules[ext]
 	if rset != nil {
+		if showVerbose {
+			fmt.Println(path)
+		}
 		source, err := OpenLineSource(path)
 		if err != nil {
 			fmt.Println("Error opening file '" + path + "': " + err.Error())
@@ -47,6 +52,7 @@ func main() {
 	var showHelp    bool = false
 
 	flag.BoolVar(&showVersion, "v",    false, "Display the version number")
+	flag.BoolVar(&showVerbose, "V",    false, "Display files as processed")
 	flag.BoolVar(&showHelp,    "h",    false, "Display help text")
 	flag.BoolVar(&showHelp,    "help", false, "Display help text")
 	flag.Parse()

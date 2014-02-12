@@ -68,9 +68,16 @@ var GoRulesList = []*Rule {
 		With(AddGoClassTag {3, 2, 0}),
 }
 
+// Clojure Rules
+
+var ClojureRulesList = []*Rule {
+	NewRule("^\\((ns|def|defn|defn-)[ \t]+([A-Za-z0-9_.-]+)", 2, 0),
+}
+
 // Master list of all Rules
 
 var Rules = map[string] *RuleSet {
 	".rb": &RuleSet { rules: RubyRulesList },
 	".go": &RuleSet { rules: GoRulesList },
+	".clj": &RuleSet { rules: ClojureRulesList },
 }

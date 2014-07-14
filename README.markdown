@@ -54,6 +54,7 @@ system.  Then do the following:
 ```
 $ git clone git://github.com/jimweirich/gotags.git
 $ cd gotags
+$ export GOPATH=$GOPATH:$PWD
 $ go install onestepback.org/gotags
 $ cp bin/gotags SOMEWHERE_IN_YOUR_PATH
 ```
